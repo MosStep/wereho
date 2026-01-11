@@ -1,0 +1,30 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card p-3 card-small">
+            <h6>Total Products</h6>
+            <h2>@Model.TotalProducts</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3 card-small">
+            <h6>Low Stock</h6>
+            <h2>@Model.LowStockCount</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3 card-small">
+            <h6>Recent Transactions</h6>
+            <ul class="list-unstyled">
+                @foreach(var t in Model.RecentTransactions)
+                {
+                    <li>@t.Date.ToLocalTime().ToString("g") — @t.Product.Name — @t.Type — @t.Quantity</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

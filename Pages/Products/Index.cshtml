@@ -1,0 +1,46 @@
+@page
+@model ProductsIndexModel
+@{
+    ViewData["Title"] = "Inventory";
+}
+<div class="mb-3 d-flex">
+    <form method="get" class="d-flex w-100">
+        <input name="q" value="@Model.Query" class="form-control me-2" placeholder="Search by name or SKU" />
+        <button class="btn btn-primary">Search</button>
+        <a class="btn btn-success ms-2" href="/Products/Create">Add Product</a>
+    </form>
+</div>
+
+<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>SKU</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Supplier</th>
+            <th>Qty</th>
+            <th>Unit Price</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var p in Model.Products)
+    {
+        <tr>
+            <td>@p.SKU</td>
+            <td>@p.Name</td>
+            <td>@p.Category?.Name</td>
+            <td>@p.Supplier?.Name</td>
+            <td>@p.Quantity</td>
+            <td>@p.UnitPrice.ToString("C")</td>
+            <td>
+                <a class="btn btn-sm btn-outline-primary" href="/Products/Edit?id=@p.Id">Edit</a>
+                <form method="post" asp-page-handler="Delete" class="d-inline">
+                    <input type="hidden" name="id" value="@p.Id" />
+                    <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
